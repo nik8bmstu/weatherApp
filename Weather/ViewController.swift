@@ -81,11 +81,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     
     /// This function gets API-key from file APIKeys.plist
-    /// - Returns: API-key for openweathermap.org
+    /// - Returns: API-key for weatherstack.com
     func getWeatherApiKey() -> String {
         let filePath = Bundle.main.path(forResource: "APIKeys", ofType: "plist")!
         let parameters = NSDictionary(contentsOfFile:filePath)
-        let apiKey = parameters!["openWeatherApiKey"]! as! String
+        let apiKey = parameters!["weatherApiKey"]! as! String
         return apiKey
     }
 }
