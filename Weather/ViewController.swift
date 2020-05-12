@@ -24,6 +24,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let gradientLayer = CAGradientLayer()
     var actIndicator: NVActivityIndicatorView!
     
+    var apiKey: String!
     var lat = 55.751805
     var lon = 37.618443
     let locationManager = CLLocationManager()
@@ -36,6 +37,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let actIndicatorFrame = CGRect(x: (view.frame.width - actIndicatorSize) / 2, y: 140.0, width: actIndicatorSize, height: actIndicatorSize)
         actIndicator = NVActivityIndicatorView(frame: actIndicatorFrame, type: .circleStrokeSpin, color: UIColor.white, padding: 50.0)
         actIndicator.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
+        // Add Day
+        displayDayOfWeek()
+        // Add activity indicator
         view.addSubview(actIndicator)
         // Ask permission to get device location
         locationManager.requestWhenInUseAuthorization()
@@ -51,7 +55,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         setDayBackground()
-        let apiKey = getWeatherApiKey()
+        apiKey = getWeatherApiKey()
+        print("API-key=\(apiKey)")
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -60,7 +65,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         lat = location.coordinate.latitude
         lon = location.coordinate.longitude
         print("Location \(lat), \(lon)")
+        requestCurrentWeather()
         self.actIndicator.stopAnimating()
+    }
+    
+    func requestCurrentWeather(){
+        Alamofire.request("http://api.weatherstack.com/current?access_key=\(apiKey)&query=\(lat),\(lon)").responseJSON {
+            response in
+            if let responseString = response.result.value {
+                let jsonResponse = JSON(responseString)
+                print(jsonResponse)
+            }
+        }
+    }
+    
+    /// Get and display day of week
+    func displayDayOfWeek(){
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "EEEE"
+        self.dayLabel.text = dateFormatter.string(from: date)
     }
     
     /// This function sets background color for day time
