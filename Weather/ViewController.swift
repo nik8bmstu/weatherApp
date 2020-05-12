@@ -28,6 +28,8 @@ class ViewController: UIViewController {
         setDayBackground()
     }
 
+    
+    /// This function sets background color for day time
     func setDayBackground(){
         let topColor = UIColor(red: 50.0/255.0, green: 220.0/255.0, blue: 255.0/255.0, alpha: 1.0).cgColor
         let botColor = UIColor(red: 20.0/255.0, green: 120.0/255.0, blue: 180.0/255.0, alpha: 1.0).cgColor
@@ -35,6 +37,7 @@ class ViewController: UIViewController {
         gradientLayer.colors = [topColor, botColor]
     }
     
+    /// This function sets background color for night time
     func setNightBackground(){
         let topColor = UIColor(red: 20.0/255.0, green: 150.0/255.0, blue: 150.0/255.0, alpha: 1.0).cgColor
         let botColor = UIColor(red: 0.0/255.0, green: 80.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor

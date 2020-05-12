@@ -6,8 +6,8 @@ target 'Weather' do
   use_frameworks!
 
   # Pods for Weather
-pod 'Alamofire', '~>4.7'
-pod 'SwiftyJSON', '~>4.0'
-pod 'NVActivityIndicatorView'
+  pod 'Alamofire', '~>4.7'
+  pod 'SwiftyJSON', '~>4.0'
+  pod 'NVActivityIndicatorView'
 
 end

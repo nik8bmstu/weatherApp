@@ -3,20 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		240B6E292468C106001279A6 /* Pods_Weather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E9AFDBC63381C5226D3B8AD /* Pods_Weather.framework */; };
+		246CD5AF246B525A00EF87B2 /* APIKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 246CD5AE246B525A00EF87B2 /* APIKeys.plist */; };
 		248F79F82468A25E00CEFC9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248F79F72468A25E00CEFC9C /* AppDelegate.swift */; };
 		248F79FA2468A25E00CEFC9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248F79F92468A25E00CEFC9C /* SceneDelegate.swift */; };
 		248F79FC2468A25E00CEFC9C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248F79FB2468A25E00CEFC9C /* ViewController.swift */; };
 		248F79FF2468A25E00CEFC9C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 248F79FD2468A25E00CEFC9C /* Main.storyboard */; };
 		248F7A012468A25F00CEFC9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 248F7A002468A25F00CEFC9C /* Assets.xcassets */; };
 		248F7A042468A25F00CEFC9C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 248F7A022468A25F00CEFC9C /* LaunchScreen.storyboard */; };
-		B88D085CC8001D3BA3EE544F /* Pods_Weather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E9AFDBC63381C5226D3B8AD /* Pods_Weather.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		246CD5AE246B525A00EF87B2 /* APIKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeys.plist; sourceTree = "<group>"; };
 		248F79F42468A25E00CEFC9C /* Weather App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		248F79F72468A25E00CEFC9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		248F79F92468A25E00CEFC9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -35,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B88D085CC8001D3BA3EE544F /* Pods_Weather.framework in Frameworks */,
+				240B6E292468C106001279A6 /* Pods_Weather.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +72,7 @@
 				248F7A002468A25F00CEFC9C /* Assets.xcassets */,
 				248F7A022468A25F00CEFC9C /* LaunchScreen.storyboard */,
 				248F7A052468A25F00CEFC9C /* Info.plist */,
+				246CD5AE246B525A00EF87B2 /* APIKeys.plist */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -88,7 +91,6 @@
 				76CFED4B44FBCFB058EA793A /* Pods-Weather.debug.xcconfig */,
 				55CF3E01AD9211285B91E517 /* Pods-Weather.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -130,7 +132,7 @@
 				};
 			};
 			buildConfigurationList = 248F79EF2468A25E00CEFC9C /* Build configuration list for PBXProject "Weather" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 11.4";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -153,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				248F7A042468A25F00CEFC9C /* LaunchScreen.storyboard in Resources */,
+				246CD5AF246B525A00EF87B2 /* APIKeys.plist in Resources */,
 				248F7A012468A25F00CEFC9C /* Assets.xcassets in Resources */,
 				248F79FF2468A25E00CEFC9C /* Main.storyboard in Resources */,
 			);
