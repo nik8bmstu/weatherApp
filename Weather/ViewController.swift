@@ -24,10 +24,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let gradientLayer = CAGradientLayer()
     var actIndicator: NVActivityIndicatorView!
     
-    var apiKey: String!
+    var apiKey: String = " "
     var lat = 55.751805
     var lon = 37.618443
     let locationManager = CLLocationManager()
+    
+    struct WeatherConditions {
+        var tempC: String
+        var windSpeed: String
+        var windDir: String
+        var pressure: String
+        var name: String
+        var isDay: String
+        var location: String
+        var code: String
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,16 +47,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let actIndicatorSize: CGFloat = 180.0
         let actIndicatorFrame = CGRect(x: (view.frame.width - actIndicatorSize) / 2, y: 140.0, width: actIndicatorSize, height: actIndicatorSize)
         actIndicator = NVActivityIndicatorView(frame: actIndicatorFrame, type: .circleStrokeSpin, color: UIColor.white, padding: 50.0)
-        actIndicator.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
+        actIndicator.backgroundColor = .clear
+
         // Add Day
         displayDayOfWeek()
         // Add activity indicator
         view.addSubview(actIndicator)
+        actIndicator.startAnimating()
         // Ask permission to get device location
         locationManager.requestWhenInUseAuthorization()
         // Start find location
         if CLLocationManager.locationServicesEnabled(){
-            actIndicator.startAnimating()
+            
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
@@ -59,6 +72,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         print("API-key=\(apiKey)")
     }
 
+    
+    /// Location update callback
+    /// - Parameters:
+    ///   - manager: Location manager
+    ///   - locations: Location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
         let location = locations[0]
@@ -66,24 +84,75 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         lon = location.coordinate.longitude
         print("Location \(lat), \(lon)")
         requestCurrentWeather()
-        self.actIndicator.stopAnimating()
     }
     
+    
+    /// Reguests current weather via API
     func requestCurrentWeather(){
         Alamofire.request("http://api.weatherstack.com/current?access_key=\(apiKey)&query=\(lat),\(lon)").responseJSON {
             response in
             if let responseString = response.result.value {
+                // Response
                 let jsonResponse = JSON(responseString)
-                print(jsonResponse)
+                // Response -> Current
+                let jsonCurrent = jsonResponse["current"]
+                // Response -> Current ->
+                let jsonTemp = jsonCurrent["temperature"]
+                let jsonDescription = jsonCurrent["weather_descriptions"].array![0]
+                let jsonIsDay = jsonCurrent["is_day"]
+                let jsonWindDir = jsonCurrent["wind_dir"]
+                let jsonWindSpeed = jsonCurrent["wind_speed"]
+                let jsonPressure = jsonCurrent["pressure"]
+                let jsonWCode = jsonCurrent["weather_code"]
+                // Response -> Location
+                let jsonLocation = jsonResponse["location"]
+                let jsonCountry = jsonLocation["country"]
+                let jsonRegion = jsonLocation["region"]
+                let jsonName = jsonLocation["name"]
+                // Location name
+                let location = jsonCountry.stringValue + ", " + jsonRegion.stringValue + ", " + jsonName.stringValue
+                // Form conditions
+                let weather = WeatherConditions(
+                    tempC: jsonTemp.stringValue,
+                    windSpeed: jsonWindSpeed.stringValue,
+                    windDir: jsonWindDir.stringValue,
+                    pressure: jsonPressure.stringValue,
+                    name: jsonDescription.stringValue,
+                    isDay: jsonIsDay.stringValue,
+                    location: location,
+                    code: jsonWCode.stringValue)
+                
+                print(jsonCurrent)
+                self.displayCurrentWeather(weather: weather)
             }
         }
+    }
+    
+    /// Shows current weather conditions on screen
+    /// - Parameter weather: Structure of weather conditions
+    func displayCurrentWeather(weather: WeatherConditions){
+        tempLabel.text = weather.tempC
+        locationLabel.text = weather.location
+        weatherLabel.text = weather.name
+        if weather.isDay == "yes" {
+            setDayBackground()
+        } else {
+            setNightBackground()
+        }
+        actIndicator.stopAnimating()
+        switch weather.code{
+        case "113", "116", "308", "389":
+            conditionImageView.image = UIImage(named: weather.code)
+        default:
+            conditionImageView.image = UIImage(named: "defaultIcon")
+        }
+        
     }
     
     /// Get and display day of week
     func displayDayOfWeek(){
         let date = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "EEEE"
         self.dayLabel.text = dateFormatter.string(from: date)
     }
